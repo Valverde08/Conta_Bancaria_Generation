@@ -63,13 +63,53 @@ export class ContaController implements ContaRepository {
         }
     }
     sacar(numero: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let conta = this.buscarNoArray(numero)
+
+        if(conta != null){
+            
+            if(conta.sacar(valor) == true){
+                console.log(colors.fg.green, "\n O saque na Conta Numero :" + numero +
+                    "foi efetuado com sucesso", colors.reset
+                );
+                
+            }
+            
+        } else {
+            console.log(colors.fg.red, "\n A conta numero :" + numero +
+                    "não foi encontrada", colors.reset
+                );
+        }
     }
     depositar(numero: number, valor: number): void {
-        throw new Error("Method not implemented.");
+       let conta = this.buscarNoArray(numero)
+
+       if(conta != null){
+        conta.depositar(valor);
+        console.log(colors.fg.green, "\n O deposito na Conta Numero :" + numero +
+                    "foi efetuado com sucesso", colors.reset);
+        
+       }else{
+            console.log(colors.fg.red, "\n O deposito na Conta Numero :" + numero +
+                    "foi efetuado com sucesso", colors.reset);
+       }
     }
     transferir(numeroOrigem: number, numeroDestino: number, valor: number): void {
-        throw new Error("Method not implemented.");
+       let contaOrigem = this.buscarNoArray(numeroOrigem)
+       let contaDestino = this.buscarNoArray(numeroDestino)
+
+       if(contaOrigem != null  && contaDestino){
+        if(contaOrigem.sacar(valor) == true){
+            contaDestino.depositar(valor)
+            console.log(colors.fg.green,"\n A trasnferencia da conta"+ contaOrigem +
+                " para a conta numero " + contaDestino + "foi efetuado com sucesso", colors.reset
+            );
+            
+        } else {
+            console.log(colors.fg.green,"\n A conta numero"+ contaOrigem +
+                " e/ou conta numero " + contaDestino + "não foram encontrados.", colors.reset
+            );
+        }
+       }
     }
 
     // Métodos auxiliares
